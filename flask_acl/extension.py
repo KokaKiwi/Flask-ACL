@@ -3,7 +3,10 @@ from __future__ import absolute_import
 import functools
 import logging
 from pprint import pformat
-from urllib import urlencode
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
 
 import flask
 from flask import request, current_app
@@ -117,7 +120,7 @@ class ACLManager(object):
         """Decorator to attach an ACL to a route.
 
         E.g::
-        
+
             @app.route('/url/to/view')
             @authz.route_acl('''
                 ALLOW WHEEL ALL
